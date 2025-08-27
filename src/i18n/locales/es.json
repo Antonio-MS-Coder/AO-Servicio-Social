@@ -1,0 +1,101 @@
+{
+  "app": {
+    "name": "DOOM",
+    "slogan": "Tu talento, nuestra sede.",
+    "description": "Directorio Obregonense de Oficios Mundialista"
+  },
+  "nav": {
+    "home": "Inicio",
+    "jobs": "Empleos",
+    "workers": "Trabajadores",
+    "profile": "Perfil",
+    "login": "Iniciar Sesión",
+    "register": "Registrarse",
+    "logout": "Cerrar Sesión"
+  },
+  "auth": {
+    "email": "Correo Electrónico",
+    "phone": "Teléfono",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "loginTitle": "Iniciar Sesión",
+    "registerTitle": "Crear Cuenta",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "alreadyHaveAccount": "¿Ya tienes cuenta?",
+    "dontHaveAccount": "¿No tienes cuenta?",
+    "registerAs": "Registrarse como",
+    "worker": "Trabajador",
+    "employer": "Empleador"
+  },
+  "profile": {
+    "name": "Nombre Completo",
+    "trade": "Oficio Principal",
+    "experience": "Años de Experiencia",
+    "location": "Ubicación",
+    "bio": "Descripción",
+    "certifications": "Certificaciones",
+    "rating": "Calificación",
+    "availability": "Disponibilidad",
+    "available": "Disponible",
+    "notAvailable": "No Disponible",
+    "uploadPhoto": "Subir Foto",
+    "uploadCertification": "Subir Certificación"
+  },
+  "job": {
+    "title": "Título del Empleo",
+    "description": "Descripción",
+    "salary": "Salario",
+    "duration": "Duración",
+    "location": "Ubicación",
+    "requirements": "Requisitos",
+    "postJob": "Publicar Empleo",
+    "apply": "Aplicar",
+    "applications": "Aplicaciones",
+    "status": {
+      "open": "Abierto",
+      "closed": "Cerrado",
+      "inProgress": "En Proceso"
+    }
+  },
+  "trades": {
+    "waiter": "Mesero/a",
+    "cook": "Cocinero/a",
+    "bartender": "Bartender",
+    "cleaner": "Personal de Limpieza",
+    "security": "Seguridad",
+    "driver": "Conductor",
+    "translator": "Traductor/a",
+    "guide": "Guía Turístico",
+    "electrician": "Electricista",
+    "plumber": "Plomero",
+    "carpenter": "Carpintero",
+    "painter": "Pintor",
+    "gardener": "Jardinero",
+    "technician": "Técnico",
+    "other": "Otro"
+  },
+  "actions": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "submit": "Enviar",
+    "back": "Volver",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "viewDetails": "Ver Detalles"
+  },
+  "messages": {
+    "welcome": "Bienvenido a DOOM",
+    "loginSuccess": "Inicio de sesión exitoso",
+    "registerSuccess": "Registro exitoso",
+    "profileUpdated": "Perfil actualizado correctamente",
+    "jobPosted": "Empleo publicado exitosamente",
+    "applicationSent": "Aplicación enviada exitosamente",
+    "error": "Ha ocurrido un error",
+    "loading": "Cargando...",
+    "noResults": "No se encontraron resultados"
+  }
+}

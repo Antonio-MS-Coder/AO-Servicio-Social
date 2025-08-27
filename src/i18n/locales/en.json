@@ -1,0 +1,101 @@
+{
+  "app": {
+    "name": "DOOM",
+    "slogan": "Your talent, our venue.",
+    "description": "Obregonense Directory of World Cup Trades"
+  },
+  "nav": {
+    "home": "Home",
+    "jobs": "Jobs",
+    "workers": "Workers",
+    "profile": "Profile",
+    "login": "Log In",
+    "register": "Sign Up",
+    "logout": "Log Out"
+  },
+  "auth": {
+    "email": "Email",
+    "phone": "Phone",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "loginTitle": "Log In",
+    "registerTitle": "Create Account",
+    "forgotPassword": "Forgot your password?",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "registerAs": "Register as",
+    "worker": "Worker",
+    "employer": "Employer"
+  },
+  "profile": {
+    "name": "Full Name",
+    "trade": "Main Trade",
+    "experience": "Years of Experience",
+    "location": "Location",
+    "bio": "Description",
+    "certifications": "Certifications",
+    "rating": "Rating",
+    "availability": "Availability",
+    "available": "Available",
+    "notAvailable": "Not Available",
+    "uploadPhoto": "Upload Photo",
+    "uploadCertification": "Upload Certification"
+  },
+  "job": {
+    "title": "Job Title",
+    "description": "Description",
+    "salary": "Salary",
+    "duration": "Duration",
+    "location": "Location",
+    "requirements": "Requirements",
+    "postJob": "Post Job",
+    "apply": "Apply",
+    "applications": "Applications",
+    "status": {
+      "open": "Open",
+      "closed": "Closed",
+      "inProgress": "In Progress"
+    }
+  },
+  "trades": {
+    "waiter": "Waiter/Waitress",
+    "cook": "Cook",
+    "bartender": "Bartender",
+    "cleaner": "Cleaning Staff",
+    "security": "Security",
+    "driver": "Driver",
+    "translator": "Translator",
+    "guide": "Tour Guide",
+    "electrician": "Electrician",
+    "plumber": "Plumber",
+    "carpenter": "Carpenter",
+    "painter": "Painter",
+    "gardener": "Gardener",
+    "technician": "Technician",
+    "other": "Other"
+  },
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "search": "Search",
+    "filter": "Filter",
+    "submit": "Submit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "viewDetails": "View Details"
+  },
+  "messages": {
+    "welcome": "Welcome to DOOM",
+    "loginSuccess": "Login successful",
+    "registerSuccess": "Registration successful",
+    "profileUpdated": "Profile updated successfully",
+    "jobPosted": "Job posted successfully",
+    "applicationSent": "Application sent successfully",
+    "error": "An error has occurred",
+    "loading": "Loading...",
+    "noResults": "No results found"
+  }
+}

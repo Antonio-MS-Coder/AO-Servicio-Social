@@ -89,7 +89,7 @@ const Navigation: React.FC = () => {
     <Box sx={{ width: 250 }}>
       <Box sx={{ p: 2, backgroundColor: theme.palette.primary.main, color: 'white', display: 'flex', alignItems: 'center' }}>
         <img 
-          src="/doom-logo.png" 
+          src={`${process.env.PUBLIC_URL}/doom-logo.png`}
           alt="DOOM Logo" 
           style={{ height: 40, marginRight: 8 }}
         />
@@ -163,7 +163,7 @@ const Navigation: React.FC = () => {
             textDecoration: 'none',
           }}>
             <img 
-              src="/doom-logo.png" 
+              src={`${process.env.PUBLIC_URL}/doom-logo.png`}
               alt="DOOM" 
               style={{ 
                 height: isMobile ? 35 : 45,

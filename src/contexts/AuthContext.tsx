@@ -5,20 +5,28 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  updateProfile,
+  ConfirmationResult
 } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { auth, db } from '../config/firebase';
+import { auth, db, signInWithGoogle, signInWithPhone, setupRecaptcha } from '../config/firebase';
 import { User, UserRole } from '../types';
+import { RecaptchaVerifier } from 'firebase/auth';
 
 interface AuthContextType {
   currentUser: FirebaseUser | null;
   userData: User | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
+  loginWithGoogle: () => Promise<FirebaseUser>;
+  loginWithPhone: (phoneNumber: string, appVerifier: RecaptchaVerifier) => Promise<ConfirmationResult>;
   register: (email: string, password: string, role: UserRole) => Promise<void>;
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
+  updateUserProfile: (uid: string, data: Partial<User>) => Promise<void>;
+  createUserProfile: (uid: string, userData: Partial<User>, role: UserRole) => Promise<void>;
+  setupRecaptchaVerifier: (containerId: string) => RecaptchaVerifier;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -112,14 +120,88 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     await sendPasswordResetEmail(auth, email);
   };
 
+  // Método para login con Google
+  const loginWithGoogle = async (): Promise<FirebaseUser> => {
+    const result = await signInWithGoogle();
+    return result.user;
+  };
+
+  // Método para login con teléfono
+  const loginWithPhone = async (phoneNumber: string, appVerifier: RecaptchaVerifier): Promise<ConfirmationResult> => {
+    return await signInWithPhone(phoneNumber, appVerifier);
+  };
+
+  // Método para actualizar perfil de usuario
+  const updateUserProfile = async (uid: string, data: Partial<User>) => {
+    await setDoc(doc(db, 'users', uid), data, { merge: true });
+  };
+
+  // Método centralizado para crear perfil de usuario
+  const createUserProfile = async (uid: string, userData: Partial<User>, role: UserRole) => {
+    // Crear documento de usuario principal
+    const userDoc: User = {
+      id: uid,
+      email: userData.email || '',
+      phone: userData.phone || '',
+      displayName: userData.displayName || '',
+      photoURL: userData.photoURL || '',
+      role: role,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+
+    await setDoc(doc(db, 'users', uid), userDoc);
+
+    // Crear perfil específico según el rol
+    if (role === 'worker') {
+      await setDoc(doc(db, 'workers', uid), {
+        userId: uid,
+        name: userData.displayName || '',
+        phone: userData.phone || '',
+        trade: '',
+        experience: 0,
+        location: 'Álvaro Obregón',
+        certifications: [],
+        rating: 0,
+        totalRatings: 0,
+        available: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      });
+    } else {
+      await setDoc(doc(db, 'employers', uid), {
+        userId: uid,
+        companyName: '',
+        contactName: userData.displayName || '',
+        phone: userData.phone || '',
+        businessType: '',
+        location: 'Álvaro Obregón',
+        rating: 0,
+        totalRatings: 0,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      });
+    }
+  };
+
+  // Método para configurar reCAPTCHA
+  const setupRecaptchaVerifier = (containerId: string): RecaptchaVerifier => {
+    return setupRecaptcha(containerId);
+  };
+
   const value: AuthContextType = {
     currentUser,
     userData,
     loading,
     login,
+    loginWithGoogle,
+    loginWithPhone,
     register,
     logout,
-    resetPassword
+    resetPassword,
+    updateUserProfile,
+    createUserProfile,
+    setupRecaptchaVerifier
   };
 
   return (

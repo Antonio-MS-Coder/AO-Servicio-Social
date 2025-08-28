@@ -4,18 +4,18 @@
   "description": "Plataforma oficial de empleos para el Mundial FIFA 2026 en Álvaro Obregón",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "doom-icon.png",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "type": "image/png"
     },
     {
-      "src": "logo192.png",
+      "src": "doom-icon.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "any maskable"
     },
     {
-      "src": "logo512.png",
+      "src": "doom-icon.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
@@ -37,21 +37,21 @@
       "short_name": "Empleos",
       "description": "Ver empleos disponibles para el Mundial 2026",
       "url": "/jobs",
-      "icons": [{ "src": "/logo192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/doom-icon.png", "sizes": "192x192" }]
     },
     {
       "name": "Registrarse",
       "short_name": "Registro",
       "description": "Crear cuenta en DOOM",
       "url": "/register",
-      "icons": [{ "src": "/logo192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/doom-icon.png", "sizes": "192x192" }]
     },
     {
       "name": "Trabajadores",
       "short_name": "Trabajadores",
       "description": "Buscar trabajadores verificados",
       "url": "/workers",
-      "icons": [{ "src": "/logo192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/doom-icon.png", "sizes": "192x192" }]
     }
   ]
 }

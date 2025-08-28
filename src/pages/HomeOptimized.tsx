@@ -26,7 +26,6 @@ import {
   People,
   Security,
   Star,
-  SportsSoccer,
   LocationOn,
   ArrowForward,
   Construction,
@@ -577,14 +576,19 @@ const HomeOptimized: React.FC = () => {
                       ...animations.float,
                     }}
                   >
-                    <SportsSoccer 
+                    <Box
+                      component="img"
+                      src={`${process.env.PUBLIC_URL}/doom-icon.png`}
+                      alt="DOOM Mundial 2026"
                       sx={{ 
-                        fontSize: { xs: 200, sm: 250, md: 300 },
+                        width: { xs: 200, sm: 250, md: 300 },
+                        height: { xs: 200, sm: 250, md: 300 },
                         opacity: 1,
                         filter: 'drop-shadow(0 30px 60px rgba(0,0,0,0.3))',
                         background: 'linear-gradient(135deg, #FFFFFF 0%, #E0E0E0 100%)',
                         borderRadius: '50%',
                         padding: 2,
+                        objectFit: 'contain',
                       }} 
                     />
                     <Celebration
@@ -1265,7 +1269,16 @@ const HomeOptimized: React.FC = () => {
             <CardContent sx={{ textAlign: 'center', p: { xs: 4, md: 6 } }}>
               <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }} aria-hidden="true">
                 <LocationOn sx={{ fontSize: 60, color: theme.palette.primary.main, mr: 2 }} />
-                <SportsSoccer sx={{ fontSize: 60, color: theme.palette.secondary.main }} />
+                <Box
+                  component="img"
+                  src={`${process.env.PUBLIC_URL}/doom-icon.png`}
+                  alt="DOOM"
+                  sx={{ 
+                    width: 60, 
+                    height: 60,
+                    filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.2))'
+                  }}
+                />
               </Box>
               
               <Typography 

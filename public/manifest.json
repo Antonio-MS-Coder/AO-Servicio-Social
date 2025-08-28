@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "DOOM 2026",
+  "name": "DOOM - Directorio Obregonense de Oficios Mundialista",
+  "description": "Plataforma oficial de empleos para el Mundial FIFA 2026 en Álvaro Obregón",
   "icons": [
     {
       "src": "favicon.ico",
@@ -10,16 +11,47 @@
     {
       "src": "logo192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
       "src": "logo512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
   "start_url": ".",
+  "scope": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#007A33",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "categories": ["business", "productivity", "utilities"],
+  "lang": "es-MX",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Buscar Empleos",
+      "short_name": "Empleos",
+      "description": "Ver empleos disponibles para el Mundial 2026",
+      "url": "/jobs",
+      "icons": [{ "src": "/logo192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Registrarse",
+      "short_name": "Registro",
+      "description": "Crear cuenta en DOOM",
+      "url": "/register",
+      "icons": [{ "src": "/logo192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Trabajadores",
+      "short_name": "Trabajadores",
+      "description": "Buscar trabajadores verificados",
+      "url": "/workers",
+      "icons": [{ "src": "/logo192.png", "sizes": "192x192" }]
+    }
+  ]
 }

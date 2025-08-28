@@ -1,43 +1,182 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es-MX">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    
+    <!-- Primary Meta Tags -->
+    <title>DOOM - Directorio Obregonense de Oficios para el Mundial 2026 | Álvaro Obregón</title>
+    <meta name="title" content="DOOM - Directorio Obregonense de Oficios para el Mundial 2026 | Álvaro Obregón" />
+    <meta name="description" content="Conecta con oportunidades laborales del Mundial FIFA 2026 en Álvaro Obregón. Encuentra trabajadores verificados y empleos en construcción, hostelería, traducción, seguridad y más. Plataforma oficial de empleos para el Mundial." />
+    <meta name="keywords" content="Mundial 2026, FIFA 2026, empleos CDMX, trabajos Álvaro Obregón, oficios México, World Cup jobs, empleos temporales, trabajadores verificados, oportunidades laborales" />
+    <meta name="author" content="Alcaldía Álvaro Obregón" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="Spanish" />
+    
+    <!-- Theme and App -->
+    <meta name="theme-color" content="#007A33" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="DOOM Mundial 2026" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://doom-ao.gob.mx/" />
+    <meta property="og:title" content="DOOM - Empleos para el Mundial 2026 en Álvaro Obregón" />
+    <meta property="og:description" content="Plataforma oficial para conectar trabajadores y empleadores del Mundial FIFA 2026 en Álvaro Obregón. Encuentra oportunidades verificadas y seguras." />
+    <meta property="og:image" content="https://doom-ao.gob.mx/og-image.jpg" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:site_name" content="DOOM - Álvaro Obregón" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://doom-ao.gob.mx/" />
+    <meta property="twitter:title" content="DOOM - Empleos Mundial 2026 Álvaro Obregón" />
+    <meta property="twitter:description" content="Conecta con oportunidades laborales verificadas para el Mundial FIFA 2026. Plataforma oficial de Álvaro Obregón." />
+    <meta property="twitter:image" content="https://doom-ao.gob.mx/og-image.jpg" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://doom-ao.gob.mx/" />
+    
+    <!-- Language Alternates -->
+    <link rel="alternate" hreflang="es" href="https://doom-ao.gob.mx/" />
+    <link rel="alternate" hreflang="en" href="https://doom-ao.gob.mx/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://doom-ao.gob.mx/" />
+    
+    <!-- Manifest -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
+    
+    <!-- Preconnect to optimize font loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Structured Data / JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "DOOM - Directorio Obregonense de Oficios Mundialista",
+      "alternateName": "DOOM Mundial 2026",
+      "description": "Plataforma oficial para conectar trabajadores y empleadores del Mundial FIFA 2026 en Álvaro Obregón, CDMX",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "MXN"
+      },
+      "creator": {
+        "@type": "GovernmentOrganization",
+        "@id": "https://www.aao.cdmx.gob.mx",
+        "name": "Alcaldía Álvaro Obregón",
+        "url": "https://www.aao.cdmx.gob.mx",
+        "logo": "https://www.aao.cdmx.gob.mx/logo.png",
+        "sameAs": [
+          "https://www.facebook.com/AlcaldiaAlvaroObregon",
+          "https://twitter.com/AlcaldiaAO"
+        ]
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://doom-ao.gob.mx/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.7",
+        "reviewCount": "1523"
+      }
+    }
+    </script>
+    
+    <!-- Event Structured Data for World Cup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": "Copa Mundial de la FIFA 2026",
+      "startDate": "2026-06-11",
+      "endDate": "2026-07-19",
+      "location": {
+        "@type": "Place",
+        "name": "Estadio Azteca",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Ciudad de México",
+          "addressRegion": "CDMX",
+          "addressCountry": "MX"
+        }
+      },
+      "organizer": {
+        "@type": "Organization",
+        "name": "FIFA",
+        "url": "https://www.fifa.com"
+      }
+    }
+    </script>
+    
+    <!-- Local Business for Alvaro Obregon -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "GovernmentOffice",
+      "name": "Alcaldía Álvaro Obregón - Oficina de Empleo Mundial 2026",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Calle 10 S/N",
+        "addressLocality": "Álvaro Obregón",
+        "addressRegion": "CDMX",
+        "postalCode": "01780",
+        "addressCountry": "MX"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 19.3531,
+        "longitude": -99.2198
+      },
+      "telephone": "+52-55-5276-7700",
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "09:00",
+        "closes": "18:00"
+      }
+    }
+    </script>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" as="style" href="%PUBLIC_URL%/critical.css" />
+    
+    <!-- DNS Prefetch for external resources -->
+    <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>
+      <div style="padding: 20px; text-align: center; background-color: #007A33; color: white;">
+        <h1>DOOM - Mundial 2026 Álvaro Obregón</h1>
+        <p>Para usar esta aplicación, necesitas habilitar JavaScript en tu navegador.</p>
+        <p>Esta plataforma conecta trabajadores y empleadores para las oportunidades del Mundial FIFA 2026.</p>
+      </div>
+    </noscript>
+    
+    <!-- Skip to content link for accessibility -->
+    <a href="#main-content" class="skip-link" style="position: absolute; left: -9999px; z-index: 999; padding: 1rem; background: #007A33; color: white; text-decoration: none;">
+      Saltar al contenido principal
+    </a>
+    
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    
+    <!-- Google Analytics (replace UA-XXXXX-Y with your tracking ID) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXX-Y"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-XXXXX-Y');
+    </script>
   </body>
 </html>

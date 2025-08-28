@@ -19,7 +19,8 @@ import {
   ListItemIcon,
   Divider,
   useMediaQuery,
-  useTheme
+  useTheme,
+  alpha
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -136,8 +137,12 @@ const Navigation: React.FC = () => {
 
   return (
     <>
-      <AppBar position="static">
-        <Toolbar>
+      <AppBar position="sticky" elevation={4} sx={{ 
+        background: '#007A33',
+        boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
+        borderBottom: '5px solid #f7991c',
+      }}>
+        <Toolbar sx={{ py: 1 }}>
           {isMobile && (
             <IconButton
               color="inherit"
@@ -150,15 +155,19 @@ const Navigation: React.FC = () => {
             </IconButton>
           )}
           
-          <Typography variant="h6" component={Link} to="/" sx={{ 
+          <Typography variant="h5" component={Link} to="/" sx={{ 
             flexGrow: isMobile ? 1 : 0, 
-            mr: 4,
+            mr: 6,
+            fontWeight: 900,
+            letterSpacing: '0.1em',
             textDecoration: 'none',
-            color: 'inherit',
+            color: 'white',
             display: 'flex',
-            alignItems: 'center'
+            alignItems: 'center',
+            fontSize: { xs: '1.4rem', md: '1.8rem' },
+            textShadow: '2px 2px 4px rgba(0,0,0,0.2)'
           }}>
-            <SportsSoccer sx={{ mr: 1 }} />
+            <SportsSoccer sx={{ mr: 1.5, fontSize: { xs: 28, md: 32 } }} />
             DOOM
           </Typography>
 
@@ -171,6 +180,17 @@ const Navigation: React.FC = () => {
                   component={Link}
                   to={item.path}
                   startIcon={item.icon}
+                  sx={{
+                    fontWeight: 500,
+                    px: 2,
+                    py: 1,
+                    borderRadius: 2,
+                    transition: 'all 0.2s ease',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255,255,255,0.1)',
+                      transform: 'translateY(-1px)',
+                    },
+                  }}
                 >
                   {item.text}
                 </Button>
@@ -231,18 +251,48 @@ const Navigation: React.FC = () => {
               !isMobile && (
                 <>
                   <Button
-                    color="inherit"
+                    variant="text"
                     component={Link}
                     to="/login"
+                    sx={{
+                      color: 'white',
+                      fontSize: '1.1rem',
+                      fontWeight: 600,
+                      px: 3,
+                      py: 1.2,
+                      mr: 2,
+                      borderRadius: 2,
+                      '&:hover': {
+                        backgroundColor: 'rgba(255,255,255,0.15)',
+                        transform: 'translateY(-1px)',
+                      },
+                    }}
                   >
                     {t('nav.login')}
                   </Button>
                   <Button
-                    color="secondary"
                     variant="contained"
                     component={Link}
                     to="/register"
-                    sx={{ ml: 1 }}
+                    sx={{ 
+                      bgcolor: '#f7991c',
+                      color: 'white',
+                      fontSize: '1.1rem',
+                      fontWeight: 800,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px',
+                      px: 4,
+                      py: 1.2,
+                      borderRadius: 2,
+                      boxShadow: '0 4px 16px rgba(247,153,28,0.4)',
+                      border: '2px solid transparent',
+                      '&:hover': {
+                        bgcolor: '#ff8c00',
+                        transform: 'translateY(-3px) scale(1.05)',
+                        boxShadow: '0 6px 20px rgba(247,153,28,0.5)',
+                        border: '2px solid rgba(255,255,255,0.3)',
+                      },
+                    }}
                   >
                     {t('nav.register')}
                   </Button>

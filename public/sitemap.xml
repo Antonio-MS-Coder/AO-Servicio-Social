@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+                            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <!-- Homepage with language alternates -->
+  <url>
+    <loc>https://doom-ao.gob.mx/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://doom-ao.gob.mx/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://doom-ao.gob.mx/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://doom-ao.gob.mx/"/>
+    <lastmod>2025-08-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Jobs page -->
+  <url>
+    <loc>https://doom-ao.gob.mx/jobs</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://doom-ao.gob.mx/jobs"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://doom-ao.gob.mx/en/jobs"/>
+    <lastmod>2025-08-27</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Workers page -->
+  <url>
+    <loc>https://doom-ao.gob.mx/workers</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://doom-ao.gob.mx/workers"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://doom-ao.gob.mx/en/workers"/>
+    <lastmod>2025-08-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Registration page -->
+  <url>
+    <loc>https://doom-ao.gob.mx/register</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://doom-ao.gob.mx/register"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://doom-ao.gob.mx/en/register"/>
+    <lastmod>2025-08-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Login page -->
+  <url>
+    <loc>https://doom-ao.gob.mx/login</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://doom-ao.gob.mx/login"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://doom-ao.gob.mx/en/login"/>
+    <lastmod>2025-08-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Profile page (requires authentication but good for SEO awareness) -->
+  <url>
+    <loc>https://doom-ao.gob.mx/profile</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://doom-ao.gob.mx/profile"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://doom-ao.gob.mx/en/profile"/>
+    <lastmod>2025-08-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <!-- Dashboard -->
+  <url>
+    <loc>https://doom-ao.gob.mx/dashboard</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://doom-ao.gob.mx/dashboard"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://doom-ao.gob.mx/en/dashboard"/>
+    <lastmod>2025-08-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Post Job page -->
+  <url>
+    <loc>https://doom-ao.gob.mx/post-job</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://doom-ao.gob.mx/post-job"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://doom-ao.gob.mx/en/post-job"/>
+    <lastmod>2025-08-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+</urlset>

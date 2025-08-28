@@ -581,13 +581,10 @@ const HomeOptimized: React.FC = () => {
                       src={`${process.env.PUBLIC_URL}/doom-icon.png`}
                       alt="DOOM Mundial 2026"
                       sx={{ 
-                        width: { xs: 200, sm: 250, md: 300 },
-                        height: { xs: 200, sm: 250, md: 300 },
+                        width: { xs: 280, sm: 350, md: 420 },
+                        height: { xs: 280, sm: 350, md: 420 },
                         opacity: 1,
-                        filter: 'drop-shadow(0 30px 60px rgba(0,0,0,0.3))',
-                        background: 'linear-gradient(135deg, #FFFFFF 0%, #E0E0E0 100%)',
-                        borderRadius: '50%',
-                        padding: 2,
+                        filter: 'drop-shadow(0 40px 80px rgba(0,0,0,0.4))',
                         objectFit: 'contain',
                       }} 
                     />

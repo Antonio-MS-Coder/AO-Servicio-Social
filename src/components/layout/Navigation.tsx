@@ -20,7 +20,6 @@ import {
   Divider,
   useMediaQuery,
   useTheme,
-  alpha
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -88,11 +87,12 @@ const Navigation: React.FC = () => {
 
   const drawer = (
     <Box sx={{ width: 250 }}>
-      <Box sx={{ p: 2, backgroundColor: theme.palette.primary.main, color: 'white' }}>
-        <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
-          <SportsSoccer sx={{ mr: 1 }} />
-          DOOM
-        </Typography>
+      <Box sx={{ p: 2, backgroundColor: theme.palette.primary.main, color: 'white', display: 'flex', alignItems: 'center' }}>
+        <img 
+          src="/doom-logo.png" 
+          alt="DOOM Logo" 
+          style={{ height: 40, marginRight: 8 }}
+        />
       </Box>
       <List>
         {menuItems.map((item) => (
@@ -155,21 +155,22 @@ const Navigation: React.FC = () => {
             </IconButton>
           )}
           
-          <Typography variant="h5" component={Link} to="/" sx={{ 
+          <Box component={Link} to="/" sx={{ 
             flexGrow: isMobile ? 1 : 0, 
             mr: 6,
-            fontWeight: 900,
-            letterSpacing: '0.1em',
-            textDecoration: 'none',
-            color: 'white',
             display: 'flex',
             alignItems: 'center',
-            fontSize: { xs: '1.4rem', md: '1.8rem' },
-            textShadow: '2px 2px 4px rgba(0,0,0,0.2)'
+            textDecoration: 'none',
           }}>
-            <SportsSoccer sx={{ mr: 1.5, fontSize: { xs: 28, md: 32 } }} />
-            DOOM
-          </Typography>
+            <img 
+              src="/doom-logo.png" 
+              alt="DOOM" 
+              style={{ 
+                height: isMobile ? 35 : 45,
+                filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.3))'
+              }}
+            />
+          </Box>
 
           {!isMobile && (
             <Box sx={{ flexGrow: 1, display: 'flex' }}>

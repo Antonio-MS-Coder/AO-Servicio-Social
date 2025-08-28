@@ -16,7 +16,7 @@ import PrivateRoute from './components/auth/PrivateRoute';
 // Lazy load pages for better performance
 const HomeOptimized = lazy(() => import('./pages/HomeOptimized'));
 const Home = lazy(() => import('./pages/Home'));
-const Login = lazy(() => import('./components/auth/Login'));
+const Login = lazy(() => import('./components/auth/LoginEnhanced'));
 const Register = lazy(() => import('./components/auth/Register'));
 const Jobs = lazy(() => import('./pages/Jobs'));
 const Workers = lazy(() => import('./pages/Workers'));

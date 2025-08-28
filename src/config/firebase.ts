@@ -1,6 +1,13 @@
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
-import { getAuth } from 'firebase/auth';
+import { 
+  getAuth, 
+  GoogleAuthProvider, 
+  RecaptchaVerifier,
+  signInWithPopup,
+  signInWithPhoneNumber,
+  ConfirmationResult
+} from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
@@ -26,5 +33,51 @@ export const analytics = getAnalytics(app);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
+
+// Initialize Google Auth Provider
+export const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({
+  prompt: 'select_account'
+});
+
+// Configure auth settings for better user experience
+auth.languageCode = 'es'; // Set to Spanish for Mexico
+auth.settings.appVerificationDisabledForTesting = false; // Enable in production
+
+// Helper functions for auth
+export const signInWithGoogle = async () => {
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    return result;
+  } catch (error) {
+    console.error('Error during Google sign-in:', error);
+    throw error;
+  }
+};
+
+// Setup reCAPTCHA verifier for phone auth
+export const setupRecaptcha = (buttonId: string): RecaptchaVerifier => {
+  const recaptchaVerifier = new RecaptchaVerifier(auth, buttonId, {
+    'size': 'invisible',
+    'callback': (response: any) => {
+      console.log('reCAPTCHA verified');
+    },
+    'expired-callback': () => {
+      console.log('reCAPTCHA expired');
+    }
+  });
+  return recaptchaVerifier;
+};
+
+// Phone authentication function
+export const signInWithPhone = async (phoneNumber: string, appVerifier: RecaptchaVerifier): Promise<ConfirmationResult> => {
+  try {
+    const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
+    return confirmationResult;
+  } catch (error) {
+    console.error('Error during phone sign-in:', error);
+    throw error;
+  }
+};
 
 export default app;

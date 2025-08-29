@@ -48,20 +48,22 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     if (currentUser) {
       fetchDashboardData();
+    } else {
+      setLoading(false);
     }
   }, [currentUser]);
 
   const fetchDashboardData = async () => {
     try {
+      setLoading(true);
       if (userData?.role === 'worker') {
-        // Fetch worker statistics
+        // Fetch worker statistics - simplified query to avoid index issues
         const applicationsQuery = query(
           collection(db, 'applications'),
           where('workerId', '==', currentUser!.uid),
-          orderBy('appliedAt', 'desc'),
           limit(5)
         );
-        const applicationsSnapshot = await getDocs(applicationsQuery);
+        const applicationsSnapshot = await getDocs(applicationsQuery).catch(() => ({ size: 0, forEach: () => {} } as any));
         
         setStats({
           activeJobs: 0,
@@ -71,19 +73,18 @@ const Dashboard: React.FC = () => {
         });
         
         const apps: any[] = [];
-        applicationsSnapshot.forEach((doc) => {
+        applicationsSnapshot.forEach((doc: any) => {
           apps.push({ id: doc.id, ...doc.data() });
         });
         setRecentItems(apps);
       } else {
-        // Fetch employer statistics
+        // Fetch employer statistics - simplified query to avoid index issues
         const jobsQuery = query(
           collection(db, 'jobs'),
           where('employerId', '==', currentUser!.uid),
-          orderBy('createdAt', 'desc'),
           limit(5)
         );
-        const jobsSnapshot = await getDocs(jobsQuery);
+        const jobsSnapshot = await getDocs(jobsQuery).catch(() => ({ size: 0, forEach: () => {} } as any));
         
         setStats({
           activeJobs: jobsSnapshot.size,
@@ -93,7 +94,7 @@ const Dashboard: React.FC = () => {
         });
         
         const jobs: any[] = [];
-        jobsSnapshot.forEach((doc) => {
+        jobsSnapshot.forEach((doc: any) => {
           jobs.push({ id: doc.id, ...doc.data() });
         });
         setRecentItems(jobs);

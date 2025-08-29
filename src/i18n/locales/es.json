@@ -57,6 +57,20 @@
       "inProgress": "En Proceso"
     }
   },
+  "salary": {
+    "hour": "hora",
+    "day": "día",
+    "week": "semana",
+    "month": "mes",
+    "project": "proyecto"
+  },
+  "application": {
+    "status": {
+      "pending": "Pendiente",
+      "accepted": "Aceptada",
+      "rejected": "Rechazada"
+    }
+  },
   "trades": {
     "waiter": "Mesero/a",
     "cook": "Cocinero/a",

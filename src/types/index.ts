@@ -68,6 +68,7 @@ export enum Trade {
 export interface Certification {
   id: string;
   name: string;
+  type?: string; // food_handling, first_aid, driver_license, etc.
   issuer: string;
   issueDate: Date;
   expiryDate?: Date;
@@ -102,10 +103,14 @@ export interface JobApplication {
   jobId: string;
   workerId: string;
   workerName: string;
+  workerPhoto?: string;
+  workerRating?: number;
+  workerExperience?: number;
+  workerTrade?: string;
   coverLetter?: string;
   status: 'pending' | 'accepted' | 'rejected';
-  appliedAt: Date;
-  updatedAt: Date;
+  appliedAt: Date | any;
+  updatedAt: Date | any;
 }
 
 // Rating

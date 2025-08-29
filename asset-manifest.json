@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/AO-Servicio-Social/static/css/main.dfbafb57.css",
-    "main.js": "/AO-Servicio-Social/static/js/main.fbaa3787.js",
+    "main.js": "/AO-Servicio-Social/static/js/main.bbdda2f9.js",
     "static/js/775.c11732c7.chunk.js": "/AO-Servicio-Social/static/js/775.c11732c7.chunk.js",
     "static/js/849.fd9d42d7.chunk.js": "/AO-Servicio-Social/static/js/849.fd9d42d7.chunk.js",
     "static/js/627.bf6fc74f.chunk.js": "/AO-Servicio-Social/static/js/627.bf6fc74f.chunk.js",
     "static/js/169.a80396c0.chunk.js": "/AO-Servicio-Social/static/js/169.a80396c0.chunk.js",
     "static/js/876.9b75b9ba.chunk.js": "/AO-Servicio-Social/static/js/876.9b75b9ba.chunk.js",
-    "static/js/698.b291cc1b.chunk.js": "/AO-Servicio-Social/static/js/698.b291cc1b.chunk.js",
+    "static/js/698.f58613f1.chunk.js": "/AO-Servicio-Social/static/js/698.f58613f1.chunk.js",
     "static/js/743.fc17eccc.chunk.js": "/AO-Servicio-Social/static/js/743.fc17eccc.chunk.js",
     "static/js/975.0e515a89.chunk.js": "/AO-Servicio-Social/static/js/975.0e515a89.chunk.js",
     "static/js/580.cdee47e0.chunk.js": "/AO-Servicio-Social/static/js/580.cdee47e0.chunk.js",
@@ -17,7 +17,7 @@
     "static/js/414.87af706d.chunk.js": "/AO-Servicio-Social/static/js/414.87af706d.chunk.js",
     "static/js/6.9a5a954f.chunk.js": "/AO-Servicio-Social/static/js/6.9a5a954f.chunk.js",
     "static/js/174.b9db39ef.chunk.js": "/AO-Servicio-Social/static/js/174.b9db39ef.chunk.js",
-    "static/js/706.64d36f63.chunk.js": "/AO-Servicio-Social/static/js/706.64d36f63.chunk.js",
+    "static/js/706.8315fc52.chunk.js": "/AO-Servicio-Social/static/js/706.8315fc52.chunk.js",
     "static/js/648.7a951971.chunk.js": "/AO-Servicio-Social/static/js/648.7a951971.chunk.js",
     "static/js/24.be189299.chunk.js": "/AO-Servicio-Social/static/js/24.be189299.chunk.js",
     "static/js/658.7f4e496b.chunk.js": "/AO-Servicio-Social/static/js/658.7f4e496b.chunk.js",
@@ -45,13 +45,13 @@
     "static/js/872.db98a2cc.chunk.js": "/AO-Servicio-Social/static/js/872.db98a2cc.chunk.js",
     "index.html": "/AO-Servicio-Social/index.html",
     "main.dfbafb57.css.map": "/AO-Servicio-Social/static/css/main.dfbafb57.css.map",
-    "main.fbaa3787.js.map": "/AO-Servicio-Social/static/js/main.fbaa3787.js.map",
+    "main.bbdda2f9.js.map": "/AO-Servicio-Social/static/js/main.bbdda2f9.js.map",
     "775.c11732c7.chunk.js.map": "/AO-Servicio-Social/static/js/775.c11732c7.chunk.js.map",
     "849.fd9d42d7.chunk.js.map": "/AO-Servicio-Social/static/js/849.fd9d42d7.chunk.js.map",
     "627.bf6fc74f.chunk.js.map": "/AO-Servicio-Social/static/js/627.bf6fc74f.chunk.js.map",
     "169.a80396c0.chunk.js.map": "/AO-Servicio-Social/static/js/169.a80396c0.chunk.js.map",
     "876.9b75b9ba.chunk.js.map": "/AO-Servicio-Social/static/js/876.9b75b9ba.chunk.js.map",
-    "698.b291cc1b.chunk.js.map": "/AO-Servicio-Social/static/js/698.b291cc1b.chunk.js.map",
+    "698.f58613f1.chunk.js.map": "/AO-Servicio-Social/static/js/698.f58613f1.chunk.js.map",
     "743.fc17eccc.chunk.js.map": "/AO-Servicio-Social/static/js/743.fc17eccc.chunk.js.map",
     "975.0e515a89.chunk.js.map": "/AO-Servicio-Social/static/js/975.0e515a89.chunk.js.map",
     "580.cdee47e0.chunk.js.map": "/AO-Servicio-Social/static/js/580.cdee47e0.chunk.js.map",
@@ -61,7 +61,7 @@
     "414.87af706d.chunk.js.map": "/AO-Servicio-Social/static/js/414.87af706d.chunk.js.map",
     "6.9a5a954f.chunk.js.map": "/AO-Servicio-Social/static/js/6.9a5a954f.chunk.js.map",
     "174.b9db39ef.chunk.js.map": "/AO-Servicio-Social/static/js/174.b9db39ef.chunk.js.map",
-    "706.64d36f63.chunk.js.map": "/AO-Servicio-Social/static/js/706.64d36f63.chunk.js.map",
+    "706.8315fc52.chunk.js.map": "/AO-Servicio-Social/static/js/706.8315fc52.chunk.js.map",
     "648.7a951971.chunk.js.map": "/AO-Servicio-Social/static/js/648.7a951971.chunk.js.map",
     "24.be189299.chunk.js.map": "/AO-Servicio-Social/static/js/24.be189299.chunk.js.map",
     "658.7f4e496b.chunk.js.map": "/AO-Servicio-Social/static/js/658.7f4e496b.chunk.js.map",
@@ -90,6 +90,6 @@
   },
   "entrypoints": [
     "static/css/main.dfbafb57.css",
-    "static/js/main.fbaa3787.js"
+    "static/js/main.bbdda2f9.js"
   ]
 }

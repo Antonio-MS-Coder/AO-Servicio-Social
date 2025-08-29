@@ -84,41 +84,83 @@ const Jobs: React.FC = () => {
   const fetchJobs = async () => {
     setLoading(true);
     try {
-      let q = query(
-        collection(db, 'jobs'),
-        where('status', '==', 'open'),
-        orderBy('createdAt', 'desc'),
-        limit(50)
-      );
-
-      if (selectedTrade) {
-        q = query(
-          collection(db, 'jobs'),
-          where('status', '==', 'open'),
-          where('trade', '==', selectedTrade),
-          orderBy('createdAt', 'desc'),
-          limit(50)
-        );
-      }
-
-      const querySnapshot = await getDocs(q);
-      const jobsData: JobPosting[] = [];
-      querySnapshot.forEach((doc) => {
-        jobsData.push({ id: doc.id, ...doc.data() } as JobPosting);
-      });
+      let jobsData: JobPosting[] = [];
       
-      // Simulate some additional data for demonstration
+      // Try fetching with status filter first
+      try {
+        let q;
+        if (selectedTrade) {
+          q = query(
+            collection(db, 'jobs'),
+            where('status', '==', 'open'),
+            where('trade', '==', selectedTrade),
+            orderBy('createdAt', 'desc'),
+            limit(50)
+          );
+        } else {
+          q = query(
+            collection(db, 'jobs'),
+            where('status', '==', 'open'),
+            orderBy('createdAt', 'desc'),
+            limit(50)
+          );
+        }
+        
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+          jobsData.push({ id: doc.id, ...doc.data() } as JobPosting);
+        });
+        console.log('Jobs loaded with status filter:', jobsData.length);
+      } catch (statusError) {
+        console.log('Status field issue, trying without status filter...');
+        
+        // If status field doesn't exist or isn't indexed, try without it
+        try {
+          let q;
+          if (selectedTrade) {
+            q = query(
+              collection(db, 'jobs'),
+              where('trade', '==', selectedTrade),
+              limit(50)
+            );
+          } else {
+            q = query(
+              collection(db, 'jobs'),
+              limit(50)
+            );
+          }
+          
+          const querySnapshot = await getDocs(q);
+          querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            jobsData.push({ 
+              id: doc.id, 
+              ...data,
+              status: data.status || 'open' // Default to open if no status
+            } as JobPosting);
+          });
+          console.log('Jobs loaded without status filter:', jobsData.length);
+        } catch (generalError) {
+          console.error('Error fetching jobs with simplified query:', generalError);
+        }
+      }
+      
+      // Enrich jobs with additional data
       const enrichedJobs = jobsData.map(job => ({
         ...job,
         applicants: job.applicants || Array(Math.floor(Math.random() * 50)).fill(''),
-        urgent: Math.random() > 0.7,
-        verified: Math.random() > 0.5,
-        featured: Math.random() > 0.8,
-      }));
+        urgent: (job as any).urgent !== undefined ? (job as any).urgent : Math.random() > 0.7,
+        verified: (job as any).verified !== undefined ? (job as any).verified : Math.random() > 0.5,
+        featured: (job as any).featured !== undefined ? (job as any).featured : Math.random() > 0.8,
+        createdAt: job.createdAt || new Date(),
+        updatedAt: job.updatedAt || new Date(),
+      }) as JobPosting & { urgent?: boolean; verified?: boolean; featured?: boolean });
       
       setJobs(enrichedJobs);
+      console.log('Total jobs set:', enrichedJobs.length);
     } catch (error) {
       console.error('Error fetching jobs:', error);
+      setJobs([]); // Set empty array on error
     } finally {
       setTimeout(() => setLoading(false), 500); // Small delay for smooth transition
     }

@@ -51,7 +51,7 @@ import { useAuth } from '../contexts/AuthContext';
 import SEOHead from '../components/SEO/SEOHead';
 import { animations } from '../theme';
 import { seedDatabase } from '../utils/seedData';
-import { doc, updateDoc, collection, query, where, getDocs, orderBy, limit, Timestamp } from 'firebase/firestore';
+import { doc, updateDoc, collection, query, where, getDocs, orderBy, limit } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { SuccessStory, WeeklyStory } from '../types/content';
 
@@ -114,38 +114,121 @@ const HomeOptimized: React.FC = () => {
       try {
         setContentLoading(true);
         
-        // Fetch success stories
-        const storiesQuery = query(
-          collection(db, 'successStories'),
-          where('verified', '==', true),
-          orderBy('order', 'asc'),
-          limit(3)
-        );
-        const storiesSnapshot = await getDocs(storiesQuery);
-        const storiesData: SuccessStory[] = storiesSnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-          createdAt: doc.data().createdAt?.toDate(),
-          updatedAt: doc.data().updatedAt?.toDate(),
-        } as SuccessStory));
-        setSuccessStories(storiesData);
+        // Fetch success stories - try with order field first, then without
+        try {
+          const storiesQuery = query(
+            collection(db, 'successStories'),
+            where('verified', '==', true),
+            orderBy('order', 'asc'),
+            limit(3)
+          );
+          const storiesSnapshot = await getDocs(storiesQuery);
+          const storiesData: SuccessStory[] = storiesSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+            createdAt: doc.data().createdAt?.toDate(),
+            updatedAt: doc.data().updatedAt?.toDate(),
+          } as SuccessStory));
+          setSuccessStories(storiesData);
+          console.log('Success stories loaded with order:', storiesData.length);
+        } catch (orderError) {
+          console.log('Order field not indexed, trying without order...');
+          // If order field doesn't exist or isn't indexed, try without it
+          try {
+            const storiesQuery = query(
+              collection(db, 'successStories'),
+              where('verified', '==', true),
+              limit(3)
+            );
+            const storiesSnapshot = await getDocs(storiesQuery);
+            const storiesData: SuccessStory[] = storiesSnapshot.docs.map(doc => ({
+              id: doc.id,
+              ...doc.data(),
+              order: 0, // Default order
+              createdAt: doc.data().createdAt?.toDate(),
+              updatedAt: doc.data().updatedAt?.toDate(),
+            } as SuccessStory));
+            setSuccessStories(storiesData);
+            console.log('Success stories loaded without order:', storiesData.length);
+          } catch (verifiedError) {
+            console.log('Verified field issue, trying to fetch all...');
+            // If verified field doesn't exist, try to fetch all
+            const storiesQuery = query(
+              collection(db, 'successStories'),
+              limit(3)
+            );
+            const storiesSnapshot = await getDocs(storiesQuery);
+            const storiesData: SuccessStory[] = storiesSnapshot.docs.map(doc => ({
+              id: doc.id,
+              ...doc.data(),
+              verified: true, // Default to verified
+              order: 0, // Default order
+              createdAt: doc.data().createdAt?.toDate(),
+              updatedAt: doc.data().updatedAt?.toDate(),
+            } as SuccessStory));
+            setSuccessStories(storiesData);
+            console.log('Success stories loaded (all):', storiesData.length);
+          }
+        }
 
-        // Fetch active weekly story
-        const weeklyQuery = query(
-          collection(db, 'weeklyStories'),
-          where('isActive', '==', true),
-          limit(1)
-        );
-        const weeklySnapshot = await getDocs(weeklyQuery);
-        if (!weeklySnapshot.empty) {
-          const weeklyData = weeklySnapshot.docs[0].data();
-          setWeeklyStory({
-            id: weeklySnapshot.docs[0].id,
-            ...weeklyData,
-            weekStartDate: weeklyData.weekStartDate?.toDate(),
-            createdAt: weeklyData.createdAt?.toDate(),
-            updatedAt: weeklyData.updatedAt?.toDate(),
-          } as WeeklyStory);
+        // Fetch active weekly story - try with isActive first, then without
+        try {
+          const weeklyQuery = query(
+            collection(db, 'weeklyStories'),
+            where('isActive', '==', true),
+            limit(1)
+          );
+          const weeklySnapshot = await getDocs(weeklyQuery);
+          if (!weeklySnapshot.empty) {
+            const weeklyData = weeklySnapshot.docs[0].data();
+            setWeeklyStory({
+              id: weeklySnapshot.docs[0].id,
+              ...weeklyData,
+              weekStartDate: weeklyData.weekStartDate?.toDate(),
+              createdAt: weeklyData.createdAt?.toDate(),
+              updatedAt: weeklyData.updatedAt?.toDate(),
+            } as WeeklyStory);
+            console.log('Weekly story loaded with isActive');
+          } else {
+            // If no active story, try to get the first one
+            const weeklyQueryAll = query(
+              collection(db, 'weeklyStories'),
+              limit(1)
+            );
+            const weeklySnapshotAll = await getDocs(weeklyQueryAll);
+            if (!weeklySnapshotAll.empty) {
+              const weeklyData = weeklySnapshotAll.docs[0].data();
+              setWeeklyStory({
+                id: weeklySnapshotAll.docs[0].id,
+                ...weeklyData,
+                isActive: true, // Default to active
+                weekStartDate: weeklyData.weekStartDate?.toDate(),
+                createdAt: weeklyData.createdAt?.toDate(),
+                updatedAt: weeklyData.updatedAt?.toDate(),
+              } as WeeklyStory);
+              console.log('Weekly story loaded (first available)');
+            }
+          }
+        } catch (weeklyError) {
+          console.log('Error fetching weekly story, trying without filter...');
+          // If isActive field doesn't exist, try to fetch any
+          const weeklyQuery = query(
+            collection(db, 'weeklyStories'),
+            limit(1)
+          );
+          const weeklySnapshot = await getDocs(weeklyQuery);
+          if (!weeklySnapshot.empty) {
+            const weeklyData = weeklySnapshot.docs[0].data();
+            setWeeklyStory({
+              id: weeklySnapshot.docs[0].id,
+              ...weeklyData,
+              isActive: true, // Default to active
+              weekStartDate: weeklyData.weekStartDate?.toDate(),
+              createdAt: weeklyData.createdAt?.toDate(),
+              updatedAt: weeklyData.updatedAt?.toDate(),
+            } as WeeklyStory);
+            console.log('Weekly story loaded (any)');
+          }
         }
       } catch (error) {
         console.error('Error fetching content:', error);

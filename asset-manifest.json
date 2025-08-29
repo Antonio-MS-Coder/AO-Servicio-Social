@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/AO-Servicio-Social/static/css/main.dfbafb57.css",
-    "main.js": "/AO-Servicio-Social/static/js/main.1e3fe70b.js",
+    "main.js": "/AO-Servicio-Social/static/js/main.0cf074a7.js",
     "static/js/156.a2b19dd1.chunk.js": "/AO-Servicio-Social/static/js/156.a2b19dd1.chunk.js",
     "static/js/954.2d91db9c.chunk.js": "/AO-Servicio-Social/static/js/954.2d91db9c.chunk.js",
     "static/js/627.bf6fc74f.chunk.js": "/AO-Servicio-Social/static/js/627.bf6fc74f.chunk.js",
     "static/js/169.a80396c0.chunk.js": "/AO-Servicio-Social/static/js/169.a80396c0.chunk.js",
-    "static/js/876.e6fc2ca1.chunk.js": "/AO-Servicio-Social/static/js/876.e6fc2ca1.chunk.js",
+    "static/js/876.905354ee.chunk.js": "/AO-Servicio-Social/static/js/876.905354ee.chunk.js",
     "static/js/248.d8a26f0c.chunk.js": "/AO-Servicio-Social/static/js/248.d8a26f0c.chunk.js",
     "static/js/743.d6871da9.chunk.js": "/AO-Servicio-Social/static/js/743.d6871da9.chunk.js",
     "static/js/975.0e515a89.chunk.js": "/AO-Servicio-Social/static/js/975.0e515a89.chunk.js",
@@ -40,7 +40,7 @@
     "static/js/815.10d56aa8.chunk.js": "/AO-Servicio-Social/static/js/815.10d56aa8.chunk.js",
     "static/js/615.4bb11e85.chunk.js": "/AO-Servicio-Social/static/js/615.4bb11e85.chunk.js",
     "static/js/280.b1073469.chunk.js": "/AO-Servicio-Social/static/js/280.b1073469.chunk.js",
-    "static/js/180.03c1e083.chunk.js": "/AO-Servicio-Social/static/js/180.03c1e083.chunk.js",
+    "static/js/477.05f78c65.chunk.js": "/AO-Servicio-Social/static/js/477.05f78c65.chunk.js",
     "static/js/412.8a78e3b8.chunk.js": "/AO-Servicio-Social/static/js/412.8a78e3b8.chunk.js",
     "static/js/431.9cb230f3.chunk.js": "/AO-Servicio-Social/static/js/431.9cb230f3.chunk.js",
     "static/js/938.474b2403.chunk.js": "/AO-Servicio-Social/static/js/938.474b2403.chunk.js",
@@ -49,12 +49,12 @@
     "static/js/872.db98a2cc.chunk.js": "/AO-Servicio-Social/static/js/872.db98a2cc.chunk.js",
     "index.html": "/AO-Servicio-Social/index.html",
     "main.dfbafb57.css.map": "/AO-Servicio-Social/static/css/main.dfbafb57.css.map",
-    "main.1e3fe70b.js.map": "/AO-Servicio-Social/static/js/main.1e3fe70b.js.map",
+    "main.0cf074a7.js.map": "/AO-Servicio-Social/static/js/main.0cf074a7.js.map",
     "156.a2b19dd1.chunk.js.map": "/AO-Servicio-Social/static/js/156.a2b19dd1.chunk.js.map",
     "954.2d91db9c.chunk.js.map": "/AO-Servicio-Social/static/js/954.2d91db9c.chunk.js.map",
     "627.bf6fc74f.chunk.js.map": "/AO-Servicio-Social/static/js/627.bf6fc74f.chunk.js.map",
     "169.a80396c0.chunk.js.map": "/AO-Servicio-Social/static/js/169.a80396c0.chunk.js.map",
-    "876.e6fc2ca1.chunk.js.map": "/AO-Servicio-Social/static/js/876.e6fc2ca1.chunk.js.map",
+    "876.905354ee.chunk.js.map": "/AO-Servicio-Social/static/js/876.905354ee.chunk.js.map",
     "248.d8a26f0c.chunk.js.map": "/AO-Servicio-Social/static/js/248.d8a26f0c.chunk.js.map",
     "743.d6871da9.chunk.js.map": "/AO-Servicio-Social/static/js/743.d6871da9.chunk.js.map",
     "975.0e515a89.chunk.js.map": "/AO-Servicio-Social/static/js/975.0e515a89.chunk.js.map",
@@ -88,7 +88,7 @@
     "815.10d56aa8.chunk.js.map": "/AO-Servicio-Social/static/js/815.10d56aa8.chunk.js.map",
     "615.4bb11e85.chunk.js.map": "/AO-Servicio-Social/static/js/615.4bb11e85.chunk.js.map",
     "280.b1073469.chunk.js.map": "/AO-Servicio-Social/static/js/280.b1073469.chunk.js.map",
-    "180.03c1e083.chunk.js.map": "/AO-Servicio-Social/static/js/180.03c1e083.chunk.js.map",
+    "477.05f78c65.chunk.js.map": "/AO-Servicio-Social/static/js/477.05f78c65.chunk.js.map",
     "412.8a78e3b8.chunk.js.map": "/AO-Servicio-Social/static/js/412.8a78e3b8.chunk.js.map",
     "431.9cb230f3.chunk.js.map": "/AO-Servicio-Social/static/js/431.9cb230f3.chunk.js.map",
     "938.474b2403.chunk.js.map": "/AO-Servicio-Social/static/js/938.474b2403.chunk.js.map",
@@ -98,6 +98,6 @@
   },
   "entrypoints": [
     "static/css/main.dfbafb57.css",
-    "static/js/main.1e3fe70b.js"
+    "static/js/main.0cf074a7.js"
   ]
 }

@@ -181,19 +181,22 @@ const Navigation: React.FC = () => {
               {menuItems.map((item) => (
                 <Button
                   key={item.text}
-                  color="inherit"
                   component={Link}
                   to={item.path}
                   startIcon={item.icon}
                   sx={{
-                    fontWeight: 500,
+                    color: 'white',
+                    fontWeight: 600,
                     px: 2,
                     py: 1,
                     borderRadius: 2,
                     transition: 'all 0.2s ease',
                     '&:hover': {
-                      backgroundColor: 'rgba(255,255,255,0.1)',
+                      backgroundColor: 'rgba(255,255,255,0.15)',
                       transform: 'translateY(-1px)',
+                    },
+                    '& .MuiButton-startIcon': {
+                      color: 'white',
                     },
                   }}
                 >
@@ -205,9 +208,14 @@ const Navigation: React.FC = () => {
 
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <IconButton
-              color="inherit"
               onClick={handleLanguageMenu}
-              sx={{ ml: 1 }}
+              sx={{ 
+                ml: 1,
+                color: 'white',
+                '&:hover': {
+                  backgroundColor: 'rgba(255,255,255,0.1)',
+                }
+              }}
             >
               <Language />
             </IconButton>
@@ -224,9 +232,17 @@ const Navigation: React.FC = () => {
               <>
                 <IconButton
                   onClick={handleMenu}
-                  color="inherit"
+                  sx={{
+                    '&:hover': {
+                      backgroundColor: 'rgba(255,255,255,0.1)',
+                    }
+                  }}
                 >
-                  <Avatar sx={{ bgcolor: theme.palette.secondary.main }}>
+                  <Avatar sx={{ 
+                    bgcolor: theme.palette.secondary.main,
+                    color: 'white',
+                    fontWeight: 600,
+                  }}>
                     {userData?.email?.[0]?.toUpperCase()}
                   </Avatar>
                 </IconButton>

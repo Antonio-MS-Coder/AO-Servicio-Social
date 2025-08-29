@@ -1,5 +1,5 @@
 // User types
-export type UserRole = 'worker' | 'employer';
+export type UserRole = 'worker' | 'employer' | 'admin';
 
 export interface User {
   id: string;

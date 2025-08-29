@@ -30,7 +30,8 @@ import {
   Login,
   Logout,
   Language,
-  SportsSoccer
+  SportsSoccer,
+  School
 } from '@mui/icons-material';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -82,7 +83,8 @@ const Navigation: React.FC = () => {
   const menuItems = [
     { text: t('nav.home'), icon: <Home />, path: '/' },
     { text: t('nav.jobs'), icon: <Work />, path: '/jobs' },
-    { text: t('nav.workers'), icon: <People />, path: '/workers' }
+    { text: t('nav.workers'), icon: <People />, path: '/workers' },
+    { text: 'Certificaciones', icon: <School />, path: '/certifications' }
   ];
 
   const drawer = (
@@ -237,6 +239,11 @@ const Navigation: React.FC = () => {
                   {userData?.role === 'employer' && (
                     <MenuItem onClick={() => { navigate('/post-job'); handleClose(); }}>
                       {t('job.postJob')}
+                    </MenuItem>
+                  )}
+                  {userData?.role === 'admin' && (
+                    <MenuItem onClick={() => { navigate('/admin'); handleClose(); }}>
+                      Panel Admin
                     </MenuItem>
                   )}
                   <MenuItem onClick={() => { navigate('/dashboard'); handleClose(); }}>

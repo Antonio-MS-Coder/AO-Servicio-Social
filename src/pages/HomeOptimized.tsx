@@ -19,6 +19,10 @@ import {
   alpha,
   Skeleton,
   Chip,
+  Fab,
+  Snackbar,
+  Alert,
+  CircularProgress,
 } from '@mui/material';
 import { Grid } from '@mui/material';
 import {
@@ -41,10 +45,15 @@ import {
   WhatsApp,
   Schedule,
   VerifiedUser,
+  CloudUpload,
 } from '@mui/icons-material';
 import { useAuth } from '../contexts/AuthContext';
 import SEOHead from '../components/SEO/SEOHead';
 import { animations } from '../theme';
+import { seedDatabase } from '../utils/seedData';
+import { doc, updateDoc, collection, query, where, getDocs, orderBy, limit, Timestamp } from 'firebase/firestore';
+import { db } from '../config/firebase';
+import { SuccessStory, WeeklyStory } from '../types/content';
 
 // Removed lazy loading for TrustSection as we're using custom implementation
 
@@ -87,12 +96,146 @@ const HomeOptimized: React.FC = () => {
   
   const [isVisible, setIsVisible] = useState(false);
   const [statsVisible, setStatsVisible] = useState(false);
+  const [seedLoading, setSeedLoading] = useState(false);
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' as 'success' | 'error' });
+  const [successStories, setSuccessStories] = useState<SuccessStory[]>([]);
+  const [weeklyStory, setWeeklyStory] = useState<WeeklyStory | null>(null);
+  const [contentLoading, setContentLoading] = useState(true);
 
   useEffect(() => {
     setIsVisible(true);
     const timer = setTimeout(() => setStatsVisible(true), 300);
     return () => clearTimeout(timer);
   }, []);
+
+  // Fetch success stories and weekly story from Firebase
+  useEffect(() => {
+    const fetchContent = async () => {
+      try {
+        setContentLoading(true);
+        
+        // Fetch success stories
+        const storiesQuery = query(
+          collection(db, 'successStories'),
+          where('verified', '==', true),
+          orderBy('order', 'asc'),
+          limit(3)
+        );
+        const storiesSnapshot = await getDocs(storiesQuery);
+        const storiesData: SuccessStory[] = storiesSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+          createdAt: doc.data().createdAt?.toDate(),
+          updatedAt: doc.data().updatedAt?.toDate(),
+        } as SuccessStory));
+        setSuccessStories(storiesData);
+
+        // Fetch active weekly story
+        const weeklyQuery = query(
+          collection(db, 'weeklyStories'),
+          where('isActive', '==', true),
+          limit(1)
+        );
+        const weeklySnapshot = await getDocs(weeklyQuery);
+        if (!weeklySnapshot.empty) {
+          const weeklyData = weeklySnapshot.docs[0].data();
+          setWeeklyStory({
+            id: weeklySnapshot.docs[0].id,
+            ...weeklyData,
+            weekStartDate: weeklyData.weekStartDate?.toDate(),
+            createdAt: weeklyData.createdAt?.toDate(),
+            updatedAt: weeklyData.updatedAt?.toDate(),
+          } as WeeklyStory);
+        }
+      } catch (error) {
+        console.error('Error fetching content:', error);
+      } finally {
+        setContentLoading(false);
+      }
+    };
+
+    fetchContent();
+  }, []);
+
+  const handleSeedData = async () => {
+    setSeedLoading(true);
+    try {
+      await seedDatabase();
+      setSnackbar({ 
+        open: true, 
+        message: '¡Datos de demostración cargados exitosamente! Revisa la consola para las credenciales.', 
+        severity: 'success' 
+      });
+      // Reload page after 2 seconds to show new data
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } catch (error) {
+      console.error('Error seeding data:', error);
+      setSnackbar({ 
+        open: true, 
+        message: 'Error al cargar datos de demostración', 
+        severity: 'error' 
+      });
+    } finally {
+      setSeedLoading(false);
+    }
+  };
+
+  // Function to make current user an admin
+  const makeCurrentUserAdmin = async () => {
+    if (!currentUser) {
+      setSnackbar({ 
+        open: true, 
+        message: 'Debes iniciar sesión primero', 
+        severity: 'error' 
+      });
+      return;
+    }
+
+    try {
+      // Update user role in Firebase
+      const usersRef = collection(db, 'users');
+      const q = query(usersRef, where('email', '==', currentUser.email));
+      const querySnapshot = await getDocs(q);
+      
+      if (!querySnapshot.empty) {
+        const userDoc = querySnapshot.docs[0];
+        await updateDoc(doc(db, 'users', userDoc.id), {
+          role: 'admin',
+          isAdmin: true
+        });
+        
+        setSnackbar({ 
+          open: true, 
+          message: `✅ ¡${currentUser.email} ahora es administrador! Por favor, cierra sesión y vuelve a entrar.`, 
+          severity: 'success' 
+        });
+        
+        console.log(`✅ User ${currentUser.email} is now an admin!`);
+      } else {
+        // Create user document if it doesn't exist
+        await updateDoc(doc(db, 'users', currentUser.uid), {
+          email: currentUser.email,
+          role: 'admin',
+          isAdmin: true
+        });
+        
+        setSnackbar({ 
+          open: true, 
+          message: `✅ ¡${currentUser.email} ahora es administrador! Por favor, cierra sesión y vuelve a entrar.`, 
+          severity: 'success' 
+        });
+      }
+    } catch (error) {
+      console.error('Error making user admin:', error);
+      setSnackbar({ 
+        open: true, 
+        message: 'Error al hacer admin. Intenta de nuevo.', 
+        severity: 'error' 
+      });
+    }
+  };
 
   const features = [
     {
@@ -193,48 +336,6 @@ const HomeOptimized: React.FC = () => {
     activeWorkers: 892,
   };
 
-  // Story of the week
-  const weeklyStory = {
-    name: 'María González',
-    role: 'De mesera a supervisora de eventos',
-    image: 'MG',
-    quote: 'DOOM me cambió la vida. Empecé sirviendo en eventos pequeños y ahora coordino equipos completos para eventos FIFA.',
-    before: '$8,000/mes',
-    after: '$22,000/mes',
-    timeFrame: 'En solo 6 meses',
-    jobsCompleted: 47,
-    rating: 4.9,
-  };
-
-  const successStories = [
-    {
-      name: 'María González',
-      role: t('roles.waitress', 'Mesera'),
-      company: 'Restaurant Azteca',
-      avatar: 'MG',
-      quote: t('testimonials.maria', 'Gracias a DOOM encontré trabajo en menos de una semana. La plataforma es muy fácil de usar.'),
-      rating: 5,
-      verified: true,
-    },
-    {
-      name: 'Carlos Rodríguez',
-      role: t('roles.translator', 'Traductor'),
-      company: 'FIFA Events',
-      avatar: 'CR',
-      quote: t('testimonials.carlos', 'Excelente plataforma para conectar con empleadores serios. Ya tengo contratos para el Mundial.'),
-      rating: 5,
-      verified: true,
-    },
-    {
-      name: 'Ana Martínez',
-      role: t('roles.coordinator', 'Coordinadora'),
-      company: 'Hotel Mundial',
-      avatar: 'AM',
-      quote: t('testimonials.ana', 'DOOM me ayudó a encontrar el equipo perfecto para nuestro hotel. Todos verificados y confiables.'),
-      rating: 5,
-      verified: true,
-    },
-  ];
 
   // Countdown to World Cup
   const worldCupDate = new Date('2026-06-11');
@@ -752,7 +853,54 @@ const HomeOptimized: React.FC = () => {
 
       {/* Story of the Week Section */}
       <Container maxWidth="lg" sx={{ py: 8 }}>
-        <Zoom in={isVisible} timeout={1200}>
+        {contentLoading ? (
+          // Loading skeleton for weekly story
+          <Card
+            sx={{
+              background: 'linear-gradient(135deg, #FFFFFF 0%, #FFF8E1 100%)',
+              border: '3px solid',
+              borderColor: '#FFB300',
+              overflow: 'hidden',
+              position: 'relative',
+            }}
+          >
+            <CardContent sx={{ p: 0 }}>
+              <Grid container>
+                <Grid item xs={12} md={7} sx={{ p: 4 }}>
+                  <Skeleton variant="rectangular" width={180} height={32} sx={{ mb: 3 }} />
+                  <Skeleton variant="text" width="70%" height={48} />
+                  <Skeleton variant="text" width="50%" height={32} />
+                  <Box sx={{ my: 3 }}>
+                    <Skeleton variant="text" width="100%" height={24} />
+                    <Skeleton variant="text" width="100%" height={24} />
+                    <Skeleton variant="text" width="80%" height={24} />
+                  </Box>
+                  <Grid container spacing={3} sx={{ mt: 2 }}>
+                    {[...Array(4)].map((_, i) => (
+                      <Grid item xs={6} sm={3} key={i}>
+                        <Skeleton variant="text" width="60%" height={16} />
+                        <Skeleton variant="text" width="80%" height={28} />
+                      </Grid>
+                    ))}
+                  </Grid>
+                  <Box sx={{ mt: 4 }}>
+                    <Skeleton variant="rectangular" width={200} height={40} />
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={5} sx={{ 
+                  background: `linear-gradient(135deg, ${theme.palette.primary.light} 0%, ${theme.palette.primary.main} 100%)`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  minHeight: 400,
+                }}>
+                  <Skeleton variant="circular" width={200} height={200} />
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        ) : weeklyStory ? (
+          <Zoom in={isVisible} timeout={1200}>
           <Card
             sx={{
               background: 'linear-gradient(135deg, #FFFFFF 0%, #FFF8E1 100%)',
@@ -775,10 +923,10 @@ const HomeOptimized: React.FC = () => {
                     }}
                   />
                   <Typography variant="h3" fontWeight={800} gutterBottom color="primary.dark">
-                    {weeklyStory.name}
+                    {weeklyStory?.name}
                   </Typography>
                   <Typography variant="h5" color="text.secondary" gutterBottom>
-                    {weeklyStory.role}
+                    {weeklyStory?.beforeTitle} → {weeklyStory?.afterTitle}
                   </Typography>
                   
                   <Typography 
@@ -800,7 +948,7 @@ const HomeOptimized: React.FC = () => {
                       }
                     }}
                   >
-                    {weeklyStory.quote}
+                    {weeklyStory?.story}
                   </Typography>
 
                   <Grid container spacing={3} sx={{ mt: 2 }}>
@@ -808,7 +956,7 @@ const HomeOptimized: React.FC = () => {
                       <Box>
                         <Typography variant="caption" sx={{ color: '#00953B', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>ANTES</Typography>
                         <Typography variant="h6" fontWeight={700} color="text.secondary" sx={{ textDecoration: 'line-through' }}>
-                          {weeklyStory.before}
+                          ${weeklyStory?.beforeSalary?.toLocaleString()}/mes
                         </Typography>
                       </Box>
                     </Grid>
@@ -816,7 +964,7 @@ const HomeOptimized: React.FC = () => {
                       <Box>
                         <Typography variant="caption" sx={{ color: '#00953B', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>AHORA</Typography>
                         <Typography variant="h6" fontWeight={700} color="success.main">
-                          {weeklyStory.after}
+                          ${weeklyStory?.afterSalary?.toLocaleString()}/mes
                         </Typography>
                       </Box>
                     </Grid>
@@ -824,7 +972,7 @@ const HomeOptimized: React.FC = () => {
                       <Box>
                         <Typography variant="caption" sx={{ color: '#00953B', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>TRABAJOS</Typography>
                         <Typography variant="h6" fontWeight={700} color="primary.main">
-                          {weeklyStory.jobsCompleted}
+                          {weeklyStory?.jobsCompleted}
                         </Typography>
                       </Box>
                     </Grid>
@@ -832,7 +980,7 @@ const HomeOptimized: React.FC = () => {
                       <Box>
                         <Typography variant="caption" sx={{ color: '#00953B', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>CALIFICACIÓN</Typography>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                          <Typography variant="h6" fontWeight={700}>{weeklyStory.rating}</Typography>
+                          <Typography variant="h6" fontWeight={700}>{weeklyStory?.rating}</Typography>
                           <Star sx={{ color: '#FFB300', fontSize: 20 }} />
                         </Box>
                       </Box>
@@ -842,6 +990,7 @@ const HomeOptimized: React.FC = () => {
                   <Box sx={{ mt: 4 }}>
                     <Button
                       variant="contained"
+                      onClick={() => navigate('/workers')}
                       sx={{
                         bgcolor: theme.palette.primary.main,
                         '&:hover': { bgcolor: theme.palette.primary.dark },
@@ -871,10 +1020,10 @@ const HomeOptimized: React.FC = () => {
                       boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
                     }}
                   >
-                    {weeklyStory.image}
+                    {weeklyStory?.initials}
                   </Avatar>
                   <Chip
-                    label={weeklyStory.timeFrame}
+                    label={weeklyStory?.timeFrame}
                     sx={{
                       position: 'absolute',
                       bottom: 30,
@@ -890,6 +1039,7 @@ const HomeOptimized: React.FC = () => {
             </CardContent>
           </Card>
         </Zoom>
+        ) : null}
       </Container>
 
       {/* Popular Trades Section */}
@@ -1150,96 +1300,133 @@ const HomeOptimized: React.FC = () => {
         </Typography>
         
         <Grid container spacing={4}>
-          {successStories.map((story, index) => (
-            <Grid item xs={12} md={4} key={index}>
-              <Zoom in={isVisible} timeout={1000 + index * 200}>
-                <Card
-                  sx={{
-                    height: '100%',
-                    position: 'relative',
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      transform: 'translateY(-8px)',
-                      boxShadow: 4,
-                    },
-                  }}
-                >
+          {contentLoading ? (
+            // Loading skeleton
+            [...Array(3)].map((_, index) => (
+              <Grid item xs={12} md={4} key={index}>
+                <Card sx={{ height: '100%' }}>
                   <CardContent>
                     <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 2 }}>
-                      <Avatar
-                        sx={{ 
-                          width: 60, 
-                          height: 60, 
-                          mr: 2,
-                          bgcolor: theme.palette.primary.main,
-                          fontSize: '1.25rem',
-                          fontWeight: 600,
-                        }}
-                      >
-                        {story.avatar}
-                      </Avatar>
+                      <Skeleton variant="circular" width={60} height={60} sx={{ mr: 2 }} />
                       <Box sx={{ flex: 1 }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                          <Typography variant="h6" fontWeight={600}>
-                            {story.name}
-                          </Typography>
-                          {story.verified && (
-                            <VerifiedUser 
-                              sx={{ 
-                                fontSize: 18, 
-                                color: theme.palette.primary.main,
-                              }}
-                              titleAccess="Usuario verificado"
-                            />
-                          )}
-                        </Box>
-                        <Typography variant="body2" color="primary">
-                          {story.role}
-                        </Typography>
-                        <Typography variant="caption" sx={{ color: '#00953B', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                          {story.company}
-                        </Typography>
+                        <Skeleton variant="text" width="60%" height={28} />
+                        <Skeleton variant="text" width="80%" height={20} />
+                        <Skeleton variant="text" width="40%" height={16} />
                       </Box>
                     </Box>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        fontStyle: 'italic',
-                        position: 'relative',
-                        pl: 3,
-                        '&::before': {
-                          content: '"""',
-                          fontSize: '2rem',
-                          color: theme.palette.primary.light,
-                          position: 'absolute',
-                          top: -10,
-                          left: 0,
-                        },
-                      }}
-                    >
-                      {story.quote}
-                    </Typography>
-                    <Box sx={{ display: 'flex', mt: 2, alignItems: 'center', gap: 1 }}>
-                      <Box sx={{ display: 'flex' }} aria-label={`Calificación: ${story.rating} estrellas`}>
-                        {[...Array(5)].map((_, i) => (
-                          <Star 
-                            key={i} 
-                            sx={{ 
-                              color: i < story.rating ? '#FFC107' : '#E0E0E0', 
-                              fontSize: 20 
-                            }} 
-                          />
-                        ))}
-                      </Box>
-                      <Typography variant="caption" sx={{ color: '#00953B', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                        {story.rating}.0
-                      </Typography>
+                    <Skeleton variant="text" width="100%" height={20} />
+                    <Skeleton variant="text" width="100%" height={20} />
+                    <Skeleton variant="text" width="80%" height={20} />
+                    <Box sx={{ display: 'flex', mt: 2, gap: 1 }}>
+                      {[...Array(5)].map((_, i) => (
+                        <Skeleton key={i} variant="circular" width={20} height={20} />
+                      ))}
                     </Box>
                   </CardContent>
                 </Card>
-              </Zoom>
+              </Grid>
+            ))
+          ) : successStories.length > 0 ? (
+            successStories.map((story, index) => (
+              <Grid item xs={12} md={4} key={story.id}>
+                <Zoom in={isVisible} timeout={1000 + index * 200}>
+                  <Card
+                    sx={{
+                      height: '100%',
+                      position: 'relative',
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        transform: 'translateY(-8px)',
+                        boxShadow: 4,
+                      },
+                    }}
+                  >
+                    <CardContent>
+                      <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 2 }}>
+                        <Avatar
+                          sx={{ 
+                            width: 60, 
+                            height: 60, 
+                            mr: 2,
+                            bgcolor: theme.palette.primary.main,
+                            fontSize: '1.25rem',
+                            fontWeight: 600,
+                          }}
+                        >
+                          {story.initials}
+                        </Avatar>
+                        <Box sx={{ flex: 1 }}>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <Typography variant="h6" fontWeight={600}>
+                              {story.name}
+                            </Typography>
+                            {story.verified && (
+                              <VerifiedUser 
+                                sx={{ 
+                                  fontSize: 18, 
+                                  color: theme.palette.primary.main,
+                                }}
+                                titleAccess="Usuario verificado"
+                              />
+                            )}
+                          </Box>
+                          <Typography variant="body2" color="primary">
+                            {story.role}
+                          </Typography>
+                          <Typography variant="caption" sx={{ color: '#00953B', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                            {story.company}
+                          </Typography>
+                        </Box>
+                      </Box>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontStyle: 'italic',
+                          position: 'relative',
+                          pl: 3,
+                          '&::before': {
+                            content: '"""',
+                            fontSize: '2rem',
+                            color: theme.palette.primary.light,
+                            position: 'absolute',
+                            top: -10,
+                            left: 0,
+                          },
+                        }}
+                      >
+                        {story.testimonial}
+                      </Typography>
+                      <Box sx={{ display: 'flex', mt: 2, alignItems: 'center', gap: 1 }}>
+                        <Box sx={{ display: 'flex' }} aria-label={`Calificación: ${story.rating} estrellas`}>
+                          {[...Array(5)].map((_, i) => (
+                            <Star 
+                              key={i} 
+                              sx={{ 
+                                color: i < story.rating ? '#FFC107' : '#E0E0E0', 
+                                fontSize: 20 
+                              }} 
+                            />
+                          ))}
+                        </Box>
+                        <Typography variant="caption" sx={{ color: '#00953B', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                          {story.rating}.0
+                        </Typography>
+                      </Box>
+                    </CardContent>
+                  </Card>
+                </Zoom>
+              </Grid>
+            ))
+          ) : (
+            // No stories message
+            <Grid item xs={12}>
+              <Paper sx={{ p: 4, textAlign: 'center' }}>
+                <Typography variant="h6" color="text.secondary">
+                  No hay historias de éxito disponibles en este momento
+                </Typography>
+              </Paper>
             </Grid>
-          ))}
+          )}
         </Grid>
       </Container>
 
@@ -1390,6 +1577,61 @@ const HomeOptimized: React.FC = () => {
           </Card>
         </Container>
       </Box>
+
+    {/* Temporary Seed Data FAB */}
+    <Fab
+      color="primary"
+      aria-label="Load demo data"
+      onClick={handleSeedData}
+      disabled={seedLoading}
+      sx={{
+        position: 'fixed',
+        bottom: 24,
+        right: 24,
+        bgcolor: '#007A33',
+        '&:hover': {
+          bgcolor: '#005522',
+        },
+      }}
+    >
+      {seedLoading ? <CircularProgress size={24} color="inherit" /> : <CloudUpload />}
+    </Fab>
+
+    {/* Temporary Admin Maker FAB - Only show if user is logged in */}
+    {currentUser && currentUser.email === 'carlosantonio.murrieta@gmail.com' && (
+      <Fab
+        color="secondary"
+        aria-label="Make me admin"
+        onClick={makeCurrentUserAdmin}
+        sx={{
+          position: 'fixed',
+          bottom: 24,
+          right: 90,
+          bgcolor: '#f7991c',
+          '&:hover': {
+            bgcolor: '#ff8c00',
+          },
+        }}
+      >
+        👑
+      </Fab>
+    )}
+
+    {/* Snackbar for notifications */}
+    <Snackbar
+      open={snackbar.open}
+      autoHideDuration={6000}
+      onClose={() => setSnackbar({ ...snackbar, open: false })}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+    >
+      <Alert 
+        onClose={() => setSnackbar({ ...snackbar, open: false })} 
+        severity={snackbar.severity as any}
+        sx={{ width: '100%' }}
+      >
+        {snackbar.message}
+      </Alert>
+    </Snackbar>
     </>
   );
 };

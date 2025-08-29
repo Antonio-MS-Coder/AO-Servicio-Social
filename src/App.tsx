@@ -29,6 +29,12 @@ const JobDetails = lazy(() => import('./pages/JobDetails'));
 const WorkerProfile = lazy(() => import('./pages/WorkerProfile'));
 const Onboarding = lazy(() => import('./pages/Onboarding'));
 const NotFound = lazy(() => import('./pages/NotFound'));
+const Certifications = lazy(() => import('./pages/Certifications'));
+const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
+const UserManagement = lazy(() => import('./pages/admin/UserManagement'));
+const CertificationManagement = lazy(() => import('./pages/admin/CertificationManagement'));
+const ContentManagement = lazy(() => import('./pages/admin/ContentManagement'));
+const SeedData = lazy(() => import('./pages/admin/SeedData'));
 
 // Loading component
 const PageLoader = () => (
@@ -59,6 +65,7 @@ function App() {
                     <Route path="/jobs/:id" element={<JobDetails />} />
                     <Route path="/workers" element={<Workers />} />
                     <Route path="/workers/:id" element={<WorkerProfile />} />
+                    <Route path="/certifications" element={<Certifications />} />
                     
                     {/* Protected Routes */}
                     <Route
@@ -106,6 +113,48 @@ function App() {
                       element={
                         <PrivateRoute>
                           <Onboarding />
+                        </PrivateRoute>
+                      }
+                    />
+                    
+                    {/* Admin Routes */}
+                    <Route
+                      path="/admin"
+                      element={
+                        <PrivateRoute requiredRole="admin">
+                          <AdminDashboard />
+                        </PrivateRoute>
+                      }
+                    />
+                    <Route
+                      path="/admin/users"
+                      element={
+                        <PrivateRoute requiredRole="admin">
+                          <UserManagement />
+                        </PrivateRoute>
+                      }
+                    />
+                    <Route
+                      path="/admin/certifications"
+                      element={
+                        <PrivateRoute requiredRole="admin">
+                          <CertificationManagement />
+                        </PrivateRoute>
+                      }
+                    />
+                    <Route
+                      path="/admin/content"
+                      element={
+                        <PrivateRoute requiredRole="admin">
+                          <ContentManagement />
+                        </PrivateRoute>
+                      }
+                    />
+                    <Route
+                      path="/admin/seed"
+                      element={
+                        <PrivateRoute requiredRole="admin">
+                          <SeedData />
                         </PrivateRoute>
                       }
                     />

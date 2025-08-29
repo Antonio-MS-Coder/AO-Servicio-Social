@@ -140,9 +140,11 @@ const Navigation: React.FC = () => {
   return (
     <>
       <AppBar position="sticky" elevation={4} sx={{ 
-        background: '#007A33',
+        background: 'linear-gradient(135deg, #007A33 0%, #005522 100%)',
         boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
         borderBottom: '5px solid #f7991c',
+        position: 'sticky',
+        zIndex: 1100,
       }}>
         <Toolbar sx={{ py: 1 }}>
           {isMobile && (
@@ -294,6 +296,8 @@ const Navigation: React.FC = () => {
                       borderRadius: 2,
                       boxShadow: '0 4px 16px rgba(247,153,28,0.4)',
                       border: '2px solid transparent',
+                      position: 'relative',
+                      zIndex: 1,
                       '&:hover': {
                         bgcolor: '#ff8c00',
                         transform: 'translateY(-3px) scale(1.05)',
@@ -302,7 +306,7 @@ const Navigation: React.FC = () => {
                       },
                     }}
                   >
-                    {t('nav.register')}
+                    REGISTRARSE
                   </Button>
                 </>
               )

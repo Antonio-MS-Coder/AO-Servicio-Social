@@ -459,11 +459,8 @@ const HomeOptimized: React.FC = () => {
                       textShadow: '3px 3px 6px rgba(0,0,0,0.4), 0 0 20px rgba(255,255,255,0.2)',
                       lineHeight: 1,
                       fontSize: { xs: '3rem', sm: '4rem', md: '5rem', lg: '6rem' },
-                      letterSpacing: '2px',
-                      background: 'linear-gradient(45deg, #FFFFFF 30%, #FFD700 90%)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      backgroundClip: 'text',
+                      letterSpacing: '8px',
+                      color: '#FFFFFF',
                       mb: 2,
                       animation: 'slideInLeft 1s ease-out',
                       '@keyframes slideInLeft': {
@@ -472,7 +469,7 @@ const HomeOptimized: React.FC = () => {
                       },
                     }}
                   >
-                    {t('app.name')}
+                    DOOM
                   </Typography>
                   
                   {/* Subtitle */}

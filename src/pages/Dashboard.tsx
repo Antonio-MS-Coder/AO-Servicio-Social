@@ -46,12 +46,18 @@ const Dashboard: React.FC = () => {
   const [recentItems, setRecentItems] = useState<any[]>([]);
 
   useEffect(() => {
+    // Redirect workers to their dedicated dashboard
+    if (userData?.role === 'worker') {
+      navigate('/worker-dashboard');
+      return;
+    }
+    
     if (currentUser) {
       fetchDashboardData();
     } else {
       setLoading(false);
     }
-  }, [currentUser]);
+  }, [currentUser, userData, navigate]);
 
   const fetchDashboardData = async () => {
     try {

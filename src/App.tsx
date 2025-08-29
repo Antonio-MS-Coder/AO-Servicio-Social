@@ -23,6 +23,8 @@ const Workers = lazy(() => import('./pages/Workers'));
 const Profile = lazy(() => import('./pages/Profile'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const PostJob = lazy(() => import('./pages/PostJob'));
+const WorkerProfileEdit = lazy(() => import('./pages/WorkerProfileEdit'));
+const WorkerDashboard = lazy(() => import('./pages/WorkerDashboard'));
 const JobDetails = lazy(() => import('./pages/JobDetails'));
 const WorkerProfile = lazy(() => import('./pages/WorkerProfile'));
 const Onboarding = lazy(() => import('./pages/Onboarding'));
@@ -72,6 +74,22 @@ function App() {
                       element={
                         <PrivateRoute>
                           <Profile />
+                        </PrivateRoute>
+                      }
+                    />
+                    <Route
+                      path="/worker-profile-edit"
+                      element={
+                        <PrivateRoute>
+                          <WorkerProfileEdit />
+                        </PrivateRoute>
+                      }
+                    />
+                    <Route
+                      path="/worker-dashboard"
+                      element={
+                        <PrivateRoute>
+                          <WorkerDashboard />
                         </PrivateRoute>
                       }
                     />

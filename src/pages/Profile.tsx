@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import {
   Container,
   Paper,
@@ -36,6 +37,7 @@ import { WorkerProfile, EmployerProfile, Trade, Certification } from '../types';
 
 const Profile: React.FC = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { currentUser, userData } = useAuth();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -62,10 +64,16 @@ const Profile: React.FC = () => {
   });
 
   useEffect(() => {
+    // Redirect workers to their dedicated profile page
+    if (userData?.role === 'worker') {
+      navigate('/worker-profile-edit');
+      return;
+    }
+    
     if (currentUser) {
       fetchProfile();
     }
-  }, [currentUser]);
+  }, [currentUser, userData, navigate]);
 
   const fetchProfile = async () => {
     try {
